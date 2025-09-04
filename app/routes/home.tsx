@@ -15,14 +15,11 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
     const { isLoading, auth } = usePuterStore();
-    // @ts-ignore
-    const location: Location<any> = useLocation();
-    const next:string = location.search.split('next=')[1];
     const navigate: NavigateFunction = useNavigate();
 
     useEffect(() => {
-        if(auth.isAuthenticated) navigate(next);
-    }, [auth.isAuthenticated, next]);
+        if(!auth.isAuthenticated) navigate('/auth?next=/');
+    }, [auth.isAuthenticated]);
   return <main className="bg-[url('/images/bg-main.svg')] bg-cover">
       <Navbar />
     <section className="main-section">
